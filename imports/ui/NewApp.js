@@ -2,13 +2,11 @@ import React, { Component } from "react"
 import { Meteor } from "meteor/meteor"
 import { withTracker } from "meteor/react-meteor-data"
 import AccountsUIWrapper from "./AccountsUIWrapper.js"
+import Home from "./Home"
 
 class App extends Component {
   render() {
     const { currentUser } = this.props
-    const hasUser = !currentUser
-
-    console.log(currentUser)
   
     return (
       <div className="container">
@@ -16,6 +14,9 @@ class App extends Component {
           <a className="navbar-brand" href="#">BM</a>
         </nav>
         <AccountsUIWrapper/>
+        {(currentUser)
+          ?<div className="mt-3"><Home/></div>
+          :''}
       </div>
     )
   }
