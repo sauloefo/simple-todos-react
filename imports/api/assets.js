@@ -28,5 +28,18 @@ Meteor.methods({
       createdAt: new Date(),
       owner: this.userId,
     });
+  },
+  'assets.remove'(...assetIds) {
+    assetIds.forEach(assetId => check(assetId, String))
+
+    const mquery = { _id: { $in: assetIds } } 
+
+    Assets.find(mquery).forEach(asset => {
+      if (asset.private && asset.owner !== this.userId) {
+        throw new Meteor.Error('not-authorized');
+      }
+    });
+
+    Assets.remove(mquery);
   }
 });
